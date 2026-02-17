@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aisya ✦ Lebaran 1447 H ✦ Akbar</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Pattern -->
+    <div class="pattern-bg"></div>
+
+    <!-- 3D Container -->
+    <div id="canvas-container"></div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- PAGE 1: Pertanyaan Pembuka -->
+        <div id="page1" class="card page active">
+            <div class="page-indicator">01 / 12</div>
+            <div class="arabic-header">بِسْمِ اللَّهِ</div>
+            <div class="title">Hai Aisya! 🫶🏻</div>
+            
+            <div class="static-text">
+                apakah aisya siap menyambut lebaran?
+            </div>
+            
+            <div class="button-group">
+                <button class="btn" id="btnPage1Iya">
+                    <i class="fas fa-check-circle"></i> Iya
+                </button>
+                <button class="btn" id="btnPage1SiapBanget">
+                    <i class="fas fa-heart"></i> aku siap bangett
+                </button>
+            </div>
+        </div>
+
+        <!-- PAGE 2: Ucapan Lebaran -->
+        <div id="page2" class="card page">
+            <div class="page-indicator">02 / 12</div>
+            <div class="arabic-header">عيد مبارك</div>
+            
+            <div class="typing-area" id="typingText"></div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <button class="btn btn-primary" id="btnPage2Lanjut" style="display: none; width: 100%;">
+                <i class="fas fa-hand-sparkles"></i> Lanjutkan 🫶🏻
+            </button>
+        </div>
+
+        <!-- PAGE 3: Pilih Makanan -->
+        <div id="page3" class="card page">
+            <div class="page-indicator">03 / 12</div>
+            <div class="arabic-header">طعام العيد</div>
+            <div class="title">Makanan Favorit? 🍽️</div>
+            
+            <div class="grid-3">
+                <div class="option-card" data-food="ketupat">🟩 Ketupat</div>
+                <div class="option-card" data-food="rendang">🥩 Rendang</div>
+                <div class="option-card" data-food="opor">🍗 Opor</div>
+                <div class="option-card" data-food="sambal">🌶️ Sambal</div>
+                <div class="option-card" data-food="lontong">🍚 Lontong</div>
+                <div class="option-card" data-food="kue">🍪 Kue Kering</div>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" class="input-field" id="inputMakanan" placeholder="Atau ketik sendiri...">
+            </div>
+            
+            <div id="statusMakanan" class="status-message"></div>
+        </div>
+
+        <!-- PAGE 4: Memori Lebaran -->
+        <div id="page4" class="card page">
+            <div class="page-indicator">04 / 12</div>
+            <div class="arabic-header">ذكريات</div>
+            <div class="title">Memori Indah 📸</div>
+            
+            <div class="memory-gallery">
+                <div class="memory-item" data-memory="1">🌙</div>
+                <div class="memory-item" data-memory="2">🕌</div>
+                <div class="memory-item" data-memory="3">🤲</div>
+                <div class="memory-item" data-memory="4">✨</div>
+                <div class="memory-item" data-memory="5">🎆</div>
+                <div class="memory-item" data-memory="6">🫶🏻</div>
+            </div>
+            
+            <div id="memoryMessage" class="status-message"></div>
+        </div>
+
+        <!-- PAGE 5: Doa Bersama -->
+        <div id="page5" class="card page">
+            <div class="page-indicator">05 / 12</div>
+            <div class="arabic-header">دعاء</div>
+            <div class="title">Doa untuk Kita 🤲</div>
+            
+            <div class="doa-list">
+                <div class="doa-item">
+                    <span class="doa-arab">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً</span>
+                    <span class="doa-arti">Ya Tuhan, beri kami kebaikan di dunia</span>
+                </div>
+                <div class="doa-item">
+                    <span class="doa-arab">وَفِي الْآخِرَةِ حَسَنَةً</span>
+                    <span class="doa-arti">Dan kebaikan di akhirat</span>
+                </div>
+                <div class="doa-item">
+                    <span class="doa-arab">وَقِنَا عَذَابَ النَّارِ</span>
+                    <span class="doa-arti">Dan lindungi dari siksa neraka</span>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="btnDoa" style="width: 100%;">
+                <i class="fas fa-hand-sparkles"></i> Aamiin
+            </button>
+        </div>
+
+        <!-- PAGE 6: Surprise Box -->
+        <div id="page6" class="card page">
+            <div class="page-indicator">06 / 12</div>
+            <div class="arabic-header">مفاجأة</div>
+            <div class="title">Ada Kejutan! 🎁</div>
+            
+            <div class="surprise-box" id="surpriseBox">
+                <div class="box-icon">🎁</div>
+                <div id="surpriseText">Klik untuk buka</div>
+            </div>
+            
+            <div id="surpriseMessage" class="status-message"></div>
+        </div>
+
+        <!-- PAGE 7: Love Meter -->
+        <div id="page7" class="card page">
+            <div class="page-indicator">07 / 12</div>
+            <div class="arabic-header">محبة</div>
+            <div class="title">Cinta Akbar 💝</div>
+            
+            <div class="love-meter">
+                <div class="meter-bar">
+                    <div class="meter-fill" id="loveMeterFill"></div>
+                </div>
+                <div class="love-percentage" id="lovePercentage">0%</div>
+            </div>
+            
+            <button class="btn btn-primary" id="btnLoveMeter" style="width: 100%;">
+                <i class="fas fa-heart"></i> Hitung Cinta
+            </button>
+        </div>
+
+        <!-- PAGE 8: Wish List -->
+        <div id="page8" class="card page">
+            <div class="page-indicator">08 / 12</div>
+            <div class="arabic-header">أمنيات</div>
+            <div class="title">Wish List ✨</div>
+            
+            <div class="wish-item" data-wish="1">
+                <div class="wish-check">⬜</div>
+                <span>Makan ketupat bersama</span>
+            </div>
+            <div class="wish-item" data-wish="2">
+                <div class="wish-check">⬜</div>
+                <span>Shalat Idul Fitri</span>
+            </div>
+            <div class="wish-item" data-wish="3">
+                <div class="wish-check">⬜</div>
+                <span>Saling memaafkan</span>
+            </div>
+            <div class="wish-item" data-wish="4">
+                <div class="wish-check">⬜</div>
+                <span>Foto bersama</span>
+            </div>
+            
+            <div id="wishMessage" class="status-message"></div>
+        </div>
+
+        <!-- PAGE 9: PUZZLE MATCHING CARDS -->
+        <div id="page9" class="card page">
+            <div class="page-indicator">09 / 12</div>
+            <div class="arabic-header">لغز</div>
+            <div class="title">Matching Game 🎮</div>
+            <div class="subtitle">Temukan pasangan yang sama!</div>
+            
+            <div class="game-info">
+                <div class="moves-counter"><i class="fas fa-shoe-prints"></i> <span id="movesCount">0</span> Langkah</div>
+                <div class="matches-counter"><i class="fas fa-heart"></i> <span id="matchesCount">0</span>/8 Pasangan</div>
+            </div>
+            
+            <div class="puzzle-container">
+                <div class="puzzle-grid" id="puzzleGrid"></div>
+            </div>
+            
+            <div id="puzzleMessage" class="status-message"></div>
+            
+            <button class="btn" id="btnResetPuzzle" style="margin-top: 15px; width: 100%;">
+                <i class="fas fa-redo-alt"></i> Ulang Permainan
+            </button>
+        </div>
+
+        <!-- PAGE 10: TIMELINE -->
+        <div id="page10" class="card page">
+            <div class="page-indicator">10 / 12</div>
+            <div class="arabic-header">رحلة</div>
+            <div class="title">Perjalanan Kita 📅</div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Lebaran 1446 H</div>
+                    <div>Lebaran pertama kita bersama ✨</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Lebaran 1447 H</div>
+                    <div>Lebaran kedua, makin sayang 🫶🏻</div>
+                </div>
+            </div>
+            
+            <div class="future-message">
+                <i class="fas fa-star"></i> ako kita lanjutin ramadhan depan yaa? 🌙<br>
+                <span class="future-subtitle">(InsyaAllah lebih indah dari sebelumnya)</span>
+            </div>
+            
+            <button class="btn btn-primary" id="btnTimeline" style="width: 100%; margin-top: 20px;">
+                Lanjutkan Perjalanan
+            </button>
+        </div>
+
+        <!-- PAGE 11: Pesan Personal -->
+        <div id="page11" class="card page">
+            <div class="page-indicator">11 / 12</div>
+            <div class="arabic-header">رسالة</div>
+            <div class="title">Pesan Spesial 💌</div>
+            
+            <div class="message-bubble">
+                Aisya sayang, selamat Idul Fitri 1447 H. 
+                Maaf lahir dan batin ya. Semoga Allah selalu 
+                menjaga kita dan memberkahi setiap langkah. 
+                Terima kasih udah jadi bagian terindah dalam hidup Akbar. 🫶🏻
+            </div>
+            
+            <div class="input-group">
+                <input type="text" class="input-field" id="inputBalasan" placeholder="Tulis balasanmu...">
+            </div>
+        </div>
+
+        <!-- PAGE 12: Penutup -->
+        <div id="page12" class="card page">
+            <div class="page-indicator">12 / 12</div>
+            <div class="arabic-header">جزاك الله خيرا</div>
+            
+            <div class="closing-content">
+                <div class="closing-icon">🫶🏻</div>
+                
+                <p class="closing-text">terimakasih udah mau ngisi ini ya</p>
+                
+                <div class="arabic-closing">
+                    جازا كيلاه خويرون كاتسيرون
+                </div>
+                
+                <p class="signature">saya Akbar Maulana Rizki</p>
+                
+                <button class="btn btn-primary" id="btnRestart">
+                    <i class="fas fa-redo-alt"></i> Mulai Lagi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+            }
+        }
+    </script>
+    
+    <!-- JavaScript -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
