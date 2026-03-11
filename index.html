@@ -9,21 +9,975 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(145deg, #1a5a3a 0%, #2e7d4e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Pattern Background */
+        .pattern-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.05) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.05) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            pointer-events: none;
+        }
+
+        /* Card Design */
+        .card {
+            background: rgba(30, 70, 45, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 40px;
+            padding: 45px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 215, 0, 0.4);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Page Indicator */
+        .page-indicator {
+            font-size: 14px;
+            color: rgba(255, 215, 0, 0.6);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .arabic-header {
+            font-family: 'Amiri', serif;
+            font-size: 32px;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Static Text */
+        .static-text {
+            width: 100%;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #ffd700;
+            border-radius: 30px;
+            padding: 16px 24px;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        /* Button Group */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 16px 28px;
+            border: none;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            pointer-events: auto;
+        }
+
+        .btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #ffd700;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+        }
+
+        /* Input Fields */
+        .input-group {
+            margin: 25px 0;
+        }
+
+        .input-field {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 30px;
+            padding: 16px 24px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Grid Layouts */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .option-card:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #ffd700;
+            transform: scale(1.02);
+        }
+
+        .option-card.selected {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: #ffd700;
+        }
+
+        .option-card.correct {
+            background: rgba(76, 175, 80, 0.3);
+            border-color: #4caf50;
+        }
+
+        .option-card.incorrect {
+            background: rgba(244, 67, 54, 0.3);
+            border-color: #f44336;
+        }
+
+        /* Memory Gallery */
+        .memory-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .memory-item {
+            aspect-ratio: 1;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .memory-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: #ffd700;
+            transform: scale(1.05);
+        }
+
+        /* Doa List */
+        .doa-list {
+            margin: 20px 0;
+        }
+
+        .doa-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            color: white;
+        }
+
+        .doa-arab {
+            font-family: 'Amiri', serif;
+            font-size: 24px;
+            color: #ffd700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .doa-arti {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            display: block;
+        }
+
+        /* Surprise Box */
+        .surprise-box {
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px dashed rgba(255, 215, 0, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .surprise-box:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #ffd700;
+            transform: scale(1.02);
+        }
+
+        .box-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Love Meter */
+        .love-meter {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .meter-bar {
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .meter-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a8a, #ffd700);
+            width: 0%;
+            border-radius: 15px;
+            transition: width 1s ease;
+        }
+
+        .love-percentage {
+            text-align: center;
+            color: #ffd700;
+            font-size: 32px;
+            margin: 10px 0;
+        }
+
+        /* Wish List */
+        .wish-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .wish-item:hover {
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .wish-check {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ffd700;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .wish-check.checked {
+            background: #ffd700;
+            color: #1a5a3a;
+        }
+
+        /* Puzzle Grid */
+        .puzzle-container {
+            perspective: 1000px;
+            margin: 20px 0;
+        }
+
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .card-flip {
+            aspect-ratio: 1;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+            pointer-events: auto;
+        }
+
+        .card-flip.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-flip.matched {
+            transform: rotateY(180deg);
+            cursor: default;
+        }
+
+        .card-flip.matched .card-front {
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .card-front {
+            background: rgba(255, 215, 0, 0.15);
+            transform: rotateY(180deg);
+        }
+
+        .card-back {
+            background: rgba(255, 215, 0, 0.05);
+            transform: rotateY(0deg);
+            font-size: 36px;
+            color: #ffd700;
+        }
+
+        /* Game Info */
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            padding: 20px;
+            border-left: 2px solid #ffd700;
+            margin-left: 20px;
+            position: relative;
+            color: white;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 24px;
+            width: 14px;
+            height: 14px;
+            background: #ffd700;
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            color: #ffd700;
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .future-message {
+            text-align: center;
+            color: #ffd700;
+            font-size: 20px;
+            margin: 30px 0 20px;
+            padding: 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 30px;
+            font-style: italic;
+            border: 1px dashed #ffd700;
+        }
+
+        /* Message Bubble */
+        .message-bubble {
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 30px 30px 30px 5px;
+            padding: 25px;
+            margin: 20px 0;
+            color: white;
+            position: relative;
+            line-height: 1.8;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .message-bubble::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 60px;
+            color: rgba(255, 215, 0, 0.3);
+            font-family: serif;
+        }
+
+        /* Progress Container */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ffaa00);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Status Message */
+        .status-message {
+            color: #ffd700;
+            text-align: center;
+            min-height: 24px;
+            margin: 10px 0;
+        }
+
+        /* Quotes & Poem Display */
+        .quote-display, .poem-display {
+            min-height: 150px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 30px;
+            padding: 25px;
+            margin: 20px 0;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        /* Playlist */
+        .playlist {
+            margin: 20px 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .song-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .song-item:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .song-play {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffd700;
+        }
+
+        .song-info {
+            flex: 1;
+        }
+
+        .song-title {
+            font-weight: 600;
+        }
+
+        .song-artist {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .now-playing {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #ffd700;
+            border-radius: 30px;
+            padding: 12px 20px;
+            margin: 15px 0;
+            color: white;
+            text-align: center;
+        }
+
+        /* Gift Box */
+        .gift-box {
+            width: 150px;
+            height: 150px;
+            margin: 30px auto;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gift-box.open .gift-lid {
+            transform: rotateX(90deg) translateY(-20px);
+        }
+
+        .gift-lid {
+            width: 100%;
+            height: 30px;
+            background: #ffd700;
+            position: absolute;
+            top: -15px;
+            border-radius: 10px 10px 0 0;
+            transition: transform 0.5s ease;
+            transform-origin: bottom;
+            z-index: 2;
+        }
+
+        .gift-body {
+            width: 100%;
+            height: 120px;
+            background: #ffaa00;
+            border-radius: 0 0 10px 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gift-content {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            font-size: 18px;
+            min-height: 60px;
+        }
+
+        /* Countdown */
+        .countdown-timer {
+            font-size: 48px;
+            text-align: center;
+            color: #ffd700;
+            margin: 30px 0;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            font-family: monospace;
+        }
+
+        .countdown-label {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        /* Strength Bar */
+        .strength-bar {
+            height: 30px;
+            background: linear-gradient(90deg, #ff6b6b, #ffd700);
+            border-radius: 15px;
+            transition: width 0.3s ease;
+            margin: 20px 0;
+        }
+
+        .compatibility-score {
+            font-size: 36px;
+            color: #ffd700;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        /* Hide Pages */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Admin Panel Styles */
+        .admin-login {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .admin-login-btn {
+            background: #ffd700;
+            color: #1a5a3a;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .admin-login-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .admin-panel {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 450px;
+            max-height: 80vh;
+            background: rgba(30, 70, 45, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ffd700;
+            border-radius: 20px;
+            padding: 25px;
+            z-index: 1000;
+            overflow-y: auto;
+            color: white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .admin-panel.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ffd700;
+        }
+
+        .admin-header h2 {
+            color: #ffd700;
+            font-size: 20px;
+        }
+
+        .admin-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .admin-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ffd700;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .admin-tab:hover {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .admin-tab.active {
+            background: #ffd700;
+            color: #1a5a3a;
+        }
+
+        .admin-content {
+            min-height: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .login-form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 70, 45, 0.98);
+            border: 2px solid #ffd700;
+            border-radius: 20px;
+            padding: 30px;
+            z-index: 2000;
+            width: 350px;
+            display: none;
+        }
+
+        .login-form.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .login-form h3 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ffd700;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .data-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #ffd700;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .data-item small {
+            color: #ffd700;
+            font-size: 11px;
+        }
+
+        .data-item .delete-btn {
+            background: #ff4444;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .data-stats {
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .data-stats span {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card {
+                padding: 30px 20px;
+            }
+
+            .grid-3, .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-panel {
+                width: 90%;
+                right: 5%;
+                left: 5%;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .puzzle-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Background Pattern -->
     <div class="pattern-bg"></div>
 
-    <!-- 3D Container -->
-    <div id="canvas-container"></div>
+    <!-- Admin Login Button -->
+    <div class="admin-login">
+        <button class="admin-login-btn" id="adminLoginBtn">👤</button>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-form" id="loginForm">
+        <h3>🔐 Admin Login</h3>
+        <input type="password" id="adminPassword" placeholder="Masukkan Password" />
+        <button class="btn btn-primary" id="submitLogin" style="width: 100%;">Login</button>
+        <p style="color: #ff4444; margin-top: 10px; font-size: 12px; text-align: center;" id="loginError"></p>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2>📊 Admin Dashboard</h2>
+            <button class="admin-close" id="closeAdminPanel">×</button>
+        </div>
+        
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-tab="semua">📋 Semua</button>
+            <button class="admin-tab" data-tab="ucapan">💬 Ucapan</button>
+            <button class="admin-tab" data-tab="makanan">🍽️ Makanan</button>
+            <button class="admin-tab" data-tab="wishes">✨ Wishlist</button>
+            <button class="admin-tab" data-tab="balasan">💌 Balasan</button>
+            <button class="admin-tab" data-tab="poem">📝 Puisi</button>
+            <button class="admin-tab" data-tab="quotes">💭 Quotes</button>
+        </div>
+        
+        <div class="data-stats" id="dataStats">
+            Total Data: <span id="totalData">0</span>
+        </div>
+        
+        <div class="admin-content" id="adminContent">
+            <!-- Content will be loaded here -->
+        </div>
+    </div>
 
     <!-- Main Container -->
     <div class="main-container">
         <!-- PAGE 1: Pertanyaan Pembuka -->
         <div id="page1" class="card page active">
-            <div class="page-indicator">01 / 12</div>
+            <div class="page-indicator">01 / 20</div>
             <div class="arabic-header">بِسْمِ اللَّهِ</div>
             <div class="title">Hai Aisya! 🫶🏻</div>
             
@@ -41,32 +995,11 @@
             </div>
         </div>
 
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
-
         <!-- PAGE 2: Ucapan Lebaran -->
         <div id="page2" class="card page">
-            <div class="page-indicator">02 / 12</div>
+            <div class="page-indicator">02 / 20</div>
             <div class="arabic-header">عيد مبارك</div>
+            <div class="title">تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ تَقَبَّلْ ياَ كَرِيْمُ ✨</div>
             
             <div class="typing-area" id="typingText"></div>
             
@@ -78,31 +1011,10 @@ load();
                 <i class="fas fa-hand-sparkles"></i> Lanjutkan 🫶🏻
             </button>
         </div>
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
 
         <!-- PAGE 3: Pilih Makanan -->
         <div id="page3" class="card page">
-            <div class="page-indicator">03 / 12</div>
+            <div class="page-indicator">03 / 20</div>
             <div class="arabic-header">طعام العيد</div>
             <div class="title">Makanan Favorit? 🍽️</div>
             
@@ -121,30 +1033,10 @@ load();
             
             <div id="statusMakanan" class="status-message"></div>
         </div>
-<script type="module">
 
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
         <!-- PAGE 4: Memori Lebaran -->
         <div id="page4" class="card page">
-            <div class="page-indicator">04 / 12</div>
+            <div class="page-indicator">04 / 20</div>
             <div class="arabic-header">ذكريات</div>
             <div class="title">Memori Indah 📸</div>
             
@@ -159,33 +1051,12 @@ load();
             
             <div id="memoryMessage" class="status-message"></div>
         </div>
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
 
         <!-- PAGE 5: Doa Bersama -->
         <div id="page5" class="card page">
-            <div class="page-indicator">05 / 12</div>
+            <div class="page-indicator">05 / 20</div>
             <div class="arabic-header">دعاء</div>
-            <div class="title">Doa untuk Kita 🤲</div>
+            <div class="title">Doa untuk our 🤲</div>
             
             <div class="doa-list">
                 <div class="doa-item">
@@ -206,33 +1077,12 @@ load();
                 <i class="fas fa-hand-sparkles"></i> Aamiin
             </button>
         </div>
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
 
         <!-- PAGE 6: Surprise Box -->
         <div id="page6" class="card page">
-            <div class="page-indicator">06 / 12</div>
+            <div class="page-indicator">06 / 20</div>
             <div class="arabic-header">مفاجأة</div>
-            <div class="title">Ada Kejutan! 🎁</div>
+            <div class="title">surprise-box! 🎁</div>
             
             <div class="surprise-box" id="surpriseBox">
                 <div class="box-icon">🎁</div>
@@ -241,33 +1091,12 @@ load();
             
             <div id="surpriseMessage" class="status-message"></div>
         </div>
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
 
         <!-- PAGE 7: Love Meter -->
         <div id="page7" class="card page">
-            <div class="page-indicator">07 / 12</div>
+            <div class="page-indicator">07 / 20</div>
             <div class="arabic-header">محبة</div>
-            <div class="title">Cinta Akbar 💝</div>
+            <div class="title">Akbar love 💝</div>
             
             <div class="love-meter">
                 <div class="meter-bar">
@@ -277,34 +1106,13 @@ load();
             </div>
             
             <button class="btn btn-primary" id="btnLoveMeter" style="width: 100%;">
-                <i class="fas fa-heart"></i> Hitung Cinta
+                <i class="fas fa-heart"></i> Count Cinta
             </button>
         </div>
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
 
         <!-- PAGE 8: Wish List -->
         <div id="page8" class="card page">
-            <div class="page-indicator">08 / 12</div>
+            <div class="page-indicator">08 / 20</div>
             <div class="arabic-header">أمنيات</div>
             <div class="title">Wish List ✨</div>
             
@@ -327,31 +1135,10 @@ load();
             
             <div id="wishMessage" class="status-message"></div>
         </div>
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
 
         <!-- PAGE 9: PUZZLE MATCHING CARDS -->
         <div id="page9" class="card page">
-            <div class="page-indicator">09 / 12</div>
+            <div class="page-indicator">09 / 20</div>
             <div class="arabic-header">لغز</div>
             <div class="title">Matching Game 🎮</div>
             <div class="subtitle">Temukan pasangan yang sama!</div>
@@ -371,33 +1158,12 @@ load();
                 <i class="fas fa-redo-alt"></i> Ulang Permainan
             </button>
         </div>
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
 
         <!-- PAGE 10: TIMELINE -->
         <div id="page10" class="card page">
-            <div class="page-indicator">10 / 12</div>
+            <div class="page-indicator">10 / 20</div>
             <div class="arabic-header">رحلة</div>
-            <div class="title">Perjalanan Kita 📅</div>
+            <div class="title">Our journey  📅</div>
             
             <div class="timeline">
                 <div class="timeline-item">
@@ -406,44 +1172,22 @@ load();
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-date">Lebaran 1447 H</div>
-                    <div>Lebaran kedua, makin sayang 🫶🏻</div>
+                    <div>Lebaran kedua, makin better 🫶🏻</div>
                 </div>
             </div>
             
             <div class="future-message">
-                <i class="fas fa-star"></i> ayo kita lanjutin ramadhan depan yaa? 🌙<br>
-                <span class="future-subtitle">(InsyaAllah lebih indah dari sebelumnya)</span>
+                <i class="fas fa-star"></i> yuk kita lanjutin ramadhan depan yaa? 🌙
             </div>
             
             <button class="btn btn-primary" id="btnTimeline" style="width: 100%; margin-top: 20px;">
-                Lanjutkan Perjalanan
+                Continue journey
             </button>
         </div>
-        <script type="module">
-
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
 
         <!-- PAGE 11: Pesan Personal -->
         <div id="page11" class="card page">
-            <div class="page-indicator">11 / 12</div>
+            <div class="page-indicator">11 / 20</div>
             <div class="arabic-header">رسالة</div>
             <div class="title">Pesan Spesial 💌</div>
             
@@ -458,37 +1202,185 @@ load();
                 <input type="text" class="input-field" id="inputBalasan" placeholder="Tulis balasanmu...">
             </div>
         </div>
-        <script type="module">
 
-import { getDoa } from "./js/api.js";
-
-async function load() {
-  const data = await getDoa();
-
-  const div = document.getElementById("list");
-
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
-
-        <!-- PAGE 12: Penutup -->
+        <!-- PAGE 12: Quotes Ramadhan -->
         <div id="page12" class="card page">
-            <div class="page-indicator">12 / 12</div>
+            <div class="page-indicator">12 / 20</div>
+            <div class="arabic-header">كلمات</div>
+            <div class="title">Quotes Ramadhan 💭</div>
+            
+            <div class="quote-display" id="quoteDisplay">
+                "Ramadhan adalah bulan yang penuh berkah, bulan dimana pintu surga dibuka dan pintu neraka ditutup."
+            </div>
+            
+            <div class="button-group">
+                <button class="btn" id="quotePrev"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
+                <button class="btn" id="quoteNext">Selanjutnya <i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" class="input-field" id="inputQuote" placeholder="Tambah quotes favoritmu...">
+            </div>
+        </div>
+
+        <!-- PAGE 13: Puisi Cinta -->
+        <div id="page13" class="card page">
+            <div class="page-indicator">13 / 20</div>
+            <div class="arabic-header">شعر</div>
+            <div class="title">Puisi untuk Aisya 📝</div>
+            
+            <div class="poem-display" id="poemDisplay">
+                "Aisya, engkau bagai bulan di malam takbiran,<br>Menerangi hati yang gelap gulita,<br>Di setiap sujudku, namamu terselip doa,<br>Semoga kita bersama selamanya."
+            </div>
+            
+            <div class="button-group">
+                <button class="btn" id="poemPrev"><i class="fas fa-chevron-left"></i> Sebelumnya</button>
+                <button class="btn" id="poemNext">Selanjutnya <i class="fas fa-chevron-right"></i></button>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" class="input-field" id="inputPoem" placeholder="Tulis puisimu sendiri...">
+            </div>
+        </div>
+
+        <!-- PAGE 14: Tebak Tanggal (FIXED - Quiz Tidak Kembali) -->
+        <div id="page14" class="card page">
+            <div class="page-indicator">14 / 20</div>
+            <div class="arabic-header">تاريخ</div>
+            <div class="title">Quiz Spesial 📝</div>
+            
+            <div class="subtitle" id="quizQuestion">Kapan pertama kali kita bertemu?</div>
+            
+            <div class="grid-2" id="quizOptions">
+                <!-- Options will be loaded dynamically -->
+            </div>
+            
+            <div id="quizResult" class="status-message"></div>
+            <div id="quizScore" class="status-message" style="color: #ffd700; font-size: 18px; margin-top: 15px;"></div>
+            
+            <button class="btn btn-primary" id="quizNextBtn" style="display: none; width: 100%; margin-top: 20px;">
+                Pertanyaan Selanjutnya <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- PAGE 15: Kekuatan Hubungan -->
+        <div id="page15" class="card page">
+            <div class="page-indicator">15 / 20</div>
+            <div class="arabic-header">قوة</div>
+            <div class="title">Kekuatan Hubungan Kita 💪</div>
+            
+            <div class="strength-bar" id="strengthBar" style="width: 0%"></div>
+            <div class="compatibility-score" id="compatibilityScore">0%</div>
+            
+            <div class="grid-2">
+                <div class="option-card" id="strength1">🕌 Ibadah</div>
+                <div class="option-card" id="strength2">💬 Komunikasi</div>
+                <div class="option-card" id="strength3">❤️ Cinta</div>
+                <div class="option-card" id="strength4">🤲 Doa</div>
+            </div>
+        </div>
+
+        <!-- PAGE 16: Kotak Kado -->
+        <div id="page16" class="card page">
+            <div class="page-indicator">16 / 20</div>
+            <div class="arabic-header">هدية</div>
+            <div class="title">Kotak Kado Spesial 🎁</div>
+            
+            <div class="gift-box" id="giftBox">
+                <div class="gift-lid"></div>
+                <div class="gift-body"></div>
+            </div>
+            
+            <div class="gift-content" id="giftContent">
+                Klik kotak kado untuk membuka kejutan!
+            </div>
+        </div>
+
+        <!-- PAGE 17: Countdown Lebaran -->
+        <div id="page17" class="card page">
+            <div class="page-indicator">17 / 20</div>
+            <div class="arabic-header">عد تنازلي</div>
+            <div class="title">Countdown Lebaran ⏰</div>
+            
+            <div class="countdown-timer" id="countdown">00:00:00:00</div>
+            <div class="countdown-label">Hari : Jam : Menit : Detik</div>
+            
+            <div class="input-group">
+                <input type="date" class="input-field" id="lebaranDate" value="2026-03-20">
+                <button class="btn btn-primary" id="setCountdown">Set Tanggal</button>
+            </div>
+        </div>
+
+        <!-- PAGE 18: Peta Impian -->
+        <div id="page18" class="card page">
+            <div class="page-indicator">18 / 20</div>
+            <div class="arabic-header">أحلام</div>
+            <div class="title">Peta Impian 🗺️</div>
+            
+            <div class="grid-2">
+                <div class="option-card dream-item" data-dream="umrah">🕋 Umrah</div>
+                <div class="option-card dream-item" data-dream="bali">🏝️ Singapore</div>
+                <div class="option-card dream-item" data-dream="jepang">🗼 Jepang</div>
+                <div class="option-card dream-item" data-dream="eropa">🏰 Eropa</div>
+                <div class="option-card dream-item" data-dream="rumah">🏠 Rumah</div>
+                <div class="option-card dream-item" data-dream="haji">🕋 Haji</div>
+            </div>
+            
+            <div id="dreamMessage" class="status-message"></div>
+        </div>
+
+        <!-- PAGE 19: Playlist Lagu -->
+        <div id="page19" class="card page">
+            <div class="page-indicator">19 / 20</div>
+            <div class="arabic-header">غناء</div>
+            <div class="title">Playlist Spesial 🎵</div>
+            
+            <div class="playlist">
+                <div class="song-item" data-song="1">
+                    <div class="song-play"><i class="fas fa-play"></i></div>
+                    <div class="song-info">
+                        <div class="song-title">Kisah Kasih di Sekolah</div>
+                        <div class="song-artist">Chrisye</div>
+                    </div>
+                </div>
+                <div class="song-item" data-song="2">
+                    <div class="song-play"><i class="fas fa-play"></i></div>
+                    <div class="song-info">
+                        <div class="song-title">Cinta Sejati</div>
+                        <div class="song-artist">Bunga Citra Lestari</div>
+                    </div>
+                </div>
+                <div class="song-item" data-song="3">
+                    <div class="song-play"><i class="fas fa-play"></i></div>
+                    <div class="song-info">
+                        <div class="song-title">Kemarin</div>
+                        <div class="song-artist">Tulus</div>
+                    </div>
+                </div>
+                <div class="song-item" data-song="4">
+                    <div class="song-play"><i class="fas fa-play"></i></div>
+                    <div class="song-info">
+                        <div class="song-title">Takkan Terganti</div>
+                        <div class="song-artist">Kahitna</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="now-playing" id="nowPlaying">
+                <i class="fas fa-music"></i> Pilih lagu untuk diputar
+            </div>
+        </div>
+
+        <!-- PAGE 20: Penutup -->
+        <div id="page20" class="card page">
+            <div class="page-indicator">20 / 20</div>
             <div class="arabic-header">جزاك الله خيرا</div>
             
             <div class="closing-content">
                 <div class="closing-icon">🫶🏻</div>
                 
-                <p class="closing-text">terimakasih udah mau ngisi ini ya</p>
+                <p class="closing-text">terimakasih udah mau ngisi semua ini</p>
+                <p class="closing-text">20 halaman penuh cinta untuk Aisya</p>
                 
                 <div class="arabic-closing">
                     جازا كيلاه خويرون كاتسيرون
@@ -502,38 +1394,883 @@ load();
             </div>
         </div>
     </div>
+
+    <!-- Firebase dan JavaScript -->
     <script type="module">
+        // ========== FIREBASE CONFIGURATION ==========
+        // GANTI DENGAN KONFIGURASI FIREBASE KAMU
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, onSnapshot, deleteDoc, doc } 
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-import { getDoa } from "./js/api.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyB7PqO5zB5q5q5q5q5q5q5q5q5q5q5q5q5",
+            authDomain: "aisya-akbar.firebaseapp.com",
+            projectId: "aisya-akbar",
+            storageBucket: "aisya-akbar.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abc123def456ghi789"
+        };
 
-async function load() {
-  const data = await getDoa();
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-  const div = document.getElementById("list");
+        // ========== DATABASE FUNCTIONS ==========
+        const ADMIN_PASSWORD = "akbar123"; // Ganti dengan password yang kamu mau
 
-  data.forEach(d => {
-    const p = document.createElement("p");
-    p.innerText = d.text;
-    div.appendChild(p);
-  });
-}
-
-load();
-
-</script>
-
-<div id="list"></div>
-
-    <!-- Three.js -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+        // Save data to Firestore
+        async function saveData(collectionName, data) {
+            try {
+                const docRef = await addDoc(collection(db, collectionName), {
+                    ...data,
+                    timestamp: new Date().toISOString()
+                });
+                console.log("Data saved:", docRef.id);
+                return true;
+            } catch (error) {
+                console.error("Error saving data:", error);
+                return false;
             }
         }
+
+        // Delete data from Firestore
+        async function deleteData(collectionName, docId) {
+            try {
+                await deleteDoc(doc(db, collectionName, docId));
+                return true;
+            } catch (error) {
+                console.error("Error deleting data:", error);
+                return false;
+            }
+        }
+
+        // Get all data realtime
+        function getAllDataRealtime(callback) {
+            const collections = ['ucapan', 'makanan', 'wishes', 'balasan', 'poem', 'quotes'];
+            let allData = [];
+            let loadedCount = 0;
+
+            collections.forEach(collectionName => {
+                const q = query(collection(db, collectionName), orderBy("timestamp", "desc"));
+                onSnapshot(q, (snapshot) => {
+                    const data = [];
+                    snapshot.forEach(doc => {
+                        data.push({
+                            id: doc.id,
+                            collection: collectionName,
+                            ...doc.data()
+                        });
+                    });
+                    
+                    // Update total
+                    const index = collections.indexOf(collectionName);
+                    allData[index] = data;
+                    
+                    const flatData = allData.flat().filter(d => d);
+                    document.getElementById('totalData').textContent = flatData.length;
+                    
+                    callback(flatData);
+                });
+            });
+        }
+
+        // ========== ADMIN PANEL ==========
+        let isAdmin = false;
+
+        document.getElementById('adminLoginBtn').addEventListener('click', () => {
+            document.getElementById('loginForm').classList.add('show');
+        });
+
+        document.getElementById('submitLogin').addEventListener('click', () => {
+            const password = document.getElementById('adminPassword').value;
+            if (password === ADMIN_PASSWORD) {
+                isAdmin = true;
+                document.getElementById('loginForm').classList.remove('show');
+                document.getElementById('adminPanel').classList.add('show');
+                loadAdminData('semua');
+                document.getElementById('adminPassword').value = '';
+            } else {
+                document.getElementById('loginError').textContent = 'Password salah!';
+            }
+        });
+
+        document.getElementById('closeAdminPanel').addEventListener('click', () => {
+            document.getElementById('adminPanel').classList.remove('show');
+        });
+
+        // Tab switching
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                loadAdminData(tab.dataset.tab);
+            });
+        });
+
+        function loadAdminData(filter) {
+            getAllDataRealtime((data) => {
+                let filtered = data;
+                if (filter !== 'semua') {
+                    filtered = data.filter(d => d.collection === filter);
+                }
+
+                const content = document.getElementById('adminContent');
+                content.innerHTML = '';
+
+                if (filtered.length === 0) {
+                    content.innerHTML = '<p style="text-align: center; color: white;">Belum ada data</p>';
+                    return;
+                }
+
+                filtered.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'data-item';
+                    
+                    let contentHtml = '';
+                    switch(item.collection) {
+                        case 'ucapan':
+                            contentHtml = `<b>${item.nama || 'Anonim'}</b><br>${item.pesan || '-'}`;
+                            break;
+                        case 'makanan':
+                            contentHtml = `<b>Makanan:</b> ${item.makanan}`;
+                            break;
+                        case 'wishes':
+                            contentHtml = `<b>Wish:</b> ${item.wish}`;
+                            break;
+                        case 'balasan':
+                            contentHtml = `<b>Balasan:</b> ${item.balasan}`;
+                            break;
+                        case 'poem':
+                            contentHtml = `<b>Puisi:</b> ${item.puisi}`;
+                            break;
+                        case 'quotes':
+                            contentHtml = `<b>Quote:</b> ${item.quote}`;
+                            break;
+                    }
+
+                    div.innerHTML = `
+                        ${contentHtml}
+                        <br><small>${new Date(item.timestamp).toLocaleString()}</small>
+                        <br><button class="delete-btn" data-id="${item.id}" data-collection="${item.collection}">Hapus</button>
+                    `;
+
+                    content.appendChild(div);
+                });
+
+                // Add delete handlers
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        if (confirm('Hapus data ini?')) {
+                            await deleteData(btn.dataset.collection, btn.dataset.id);
+                        }
+                    });
+                });
+            });
+        }
+
+        // ========== PAGE MANAGEMENT ==========
+        function showPage(pageNum) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(`page${pageNum}`).classList.add('active');
+            
+            // Update page indicator
+            document.querySelectorAll('.page-indicator').forEach(indicator => {
+                if (indicator.closest('.page.active')) {
+                    const num = pageNum.toString().padStart(2, '0');
+                    indicator.textContent = `${num} / 20`;
+                }
+            });
+            
+            // Initialize specific pages
+            if (pageNum === 9) initPuzzle();
+            if (pageNum === 17) updateCountdown();
+        }
+
+        // ========== PAGE 1 ==========
+        document.getElementById('btnPage1Iya').addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage(2);
+            startTyping();
+            saveData('ucapan', { nama: 'Aisya', pesan: 'Memilih Iya' });
+        });
+        
+        document.getElementById('btnPage1SiapBanget').addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage(2);
+            startTyping();
+            saveData('ucapan', { nama: 'Aisya', pesan: 'Memilih Siap Banget' });
+        });
+
+        // ========== PAGE 2 TYPING ==========
+        const typingText = document.getElementById('typingText');
+        const progressBar = document.getElementById('progressBar');
+        const btnPage2Lanjut = document.getElementById('btnPage2Lanjut');
+        
+        const ucapanText = "minal aidin wal faizin, mohon maaf lahir dan batin🙏🏼";
+        
+        function startTyping() {
+            typingText.innerHTML = '';
+            btnPage2Lanjut.style.display = 'none';
+            progressBar.style.width = '0%';
+            
+            let i = 0;
+            function type() {
+                if (i < ucapanText.length) {
+                    typingText.innerHTML += ucapanText.charAt(i);
+                    i++;
+                    progressBar.style.width = (i / ucapanText.length * 100) + '%';
+                    setTimeout(type, 50);
+                } else {
+                    btnPage2Lanjut.style.display = 'block';
+                }
+            }
+            type();
+        }
+        
+        btnPage2Lanjut.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage(3);
+        });
+
+        // ========== PAGE 3 MAKANAN ==========
+        const foodCards = document.querySelectorAll('#page3 .option-card');
+        const inputMakanan = document.getElementById('inputMakanan');
+        const statusMakanan = document.getElementById('statusMakanan');
+
+        foodCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const makanan = this.textContent.trim();
+                foodCards.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                statusMakanan.textContent = `Kamu pilih: ${makanan}`;
+                saveData('makanan', { makanan });
+                setTimeout(() => showPage(4), 1000);
+            });
+        });
+
+        inputMakanan.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                const makanan = this.value.trim();
+                statusMakanan.textContent = `Kamu pilih: ${makanan}`;
+                saveData('makanan', { makanan });
+                setTimeout(() => showPage(4), 1000);
+            }
+        });
+
+        // ========== PAGE 4 MEMORY ==========
+        const memoryItems = document.querySelectorAll('#page4 .memory-item');
+        const memoryMessage = document.getElementById('memoryMessage');
+
+        const memoryTexts = {
+            1: 'Malam takbiran yang indah 🌙',
+            2: 'Shalat Id di masjid 🕌',
+            3: 'Saling memaafkan 🤲',
+            4: 'Cahaya lebaran ✨',
+            5: 'Meriahnya takbir 🎆',
+            6: 'Bersama orang tersayang 🫶🏻'
+        };
+
+        memoryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const memory = this.getAttribute('data-memory');
+                memoryMessage.textContent = memoryTexts[memory];
+                saveData('ucapan', { pesan: `Memori: ${memoryTexts[memory]}` });
+                setTimeout(() => showPage(5), 1000);
+            });
+        });
+
+        // ========== PAGE 5 DOA ==========
+        document.getElementById('btnDoa').addEventListener('click', (e) => {
+            e.preventDefault();
+            saveData('ucapan', { pesan: 'Mengucapkan Aamiin' });
+            showPage(6);
+        });
+
+        // ========== PAGE 6 SURPRISE ==========
+        const surpriseBox = document.getElementById('surpriseBox');
+        const surpriseText = document.getElementById('surpriseText');
+        const surpriseMessage = document.getElementById('surpriseMessage');
+        let surpriseCount = 0;
+
+        surpriseBox.addEventListener('click', function() {
+            surpriseCount++;
+            if (surpriseCount === 1) {
+                surpriseText.textContent = 'Aisya baik banget! ✨';
+                saveData('ucapan', { pesan: 'Membuka surprise level 1' });
+            } else if (surpriseCount === 2) {
+                surpriseText.textContent = 'Aisya sholehah 🫶🏻';
+                saveData('ucapan', { pesan: 'Membuka surprise level 2' });
+            } else if (surpriseCount === 3) {
+                surpriseText.textContent = 'Akbar sayang Aisya! ❤️';
+                surpriseMessage.textContent = 'Kejutan selesai!';
+                saveData('ucapan', { pesan: 'Membuka surprise level 3' });
+                setTimeout(() => showPage(7), 1000);
+            }
+        });
+
+        // ========== PAGE 7 LOVE METER ==========
+        const loveMeterFill = document.getElementById('loveMeterFill');
+        const lovePercentage = document.getElementById('lovePercentage');
+        const btnLoveMeter = document.getElementById('btnLoveMeter');
+
+        btnLoveMeter.addEventListener('click', (e) => {
+            e.preventDefault();
+            let percent = 0;
+            const interval = setInterval(() => {
+                percent += 5;
+                loveMeterFill.style.width = percent + '%';
+                lovePercentage.textContent = percent + '%';
+                
+                if (percent >= 100) {
+                    clearInterval(interval);
+                    saveData('ucapan', { pesan: 'Love meter mencapai 100%' });
+                    setTimeout(() => showPage(8), 1000);
+                }
+            }, 50);
+        });
+
+        // ========== PAGE 8 WISH LIST ==========
+        const wishItems = document.querySelectorAll('#page8 .wish-item');
+        const wishMessage = document.getElementById('wishMessage');
+        let wishCompleted = 0;
+
+        wishItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const check = this.querySelector('.wish-check');
+                if (!check.classList.contains('checked')) {
+                    check.classList.add('checked');
+                    check.innerHTML = '✓';
+                    wishCompleted++;
+                    
+                    const wishText = this.querySelector('span').textContent;
+                    saveData('wishes', { wish: wishText });
+                    
+                    if (wishCompleted === 4) {
+                        wishMessage.textContent = 'Semua wishlist terkumpul! ✨';
+                        setTimeout(() => showPage(9), 1000);
+                    }
+                }
+            });
+        });
+
+        // ========== PAGE 9 PUZZLE ==========
+        const puzzleGrid = document.getElementById('puzzleGrid');
+        const movesSpan = document.getElementById('movesCount');
+        const matchesSpan = document.getElementById('matchesCount');
+        const puzzleMessage = document.getElementById('puzzleMessage');
+        const btnResetPuzzle = document.getElementById('btnResetPuzzle');
+
+        const iconPairs = [
+            { id: 1, icon: '🌙' },
+            { id: 2, icon: '🕌' },
+            { id: 3, icon: '🤲' },
+            { id: 4, icon: '✨' },
+            { id: 5, icon: '🎁' },
+            { id: 6, icon: '🫶🏻' },
+            { id: 7, icon: '🍽️' },
+            { id: 8, icon: '❤️' }
+        ];
+
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+        let lockBoard = false;
+
+        function initPuzzle() {
+            cards = [];
+            iconPairs.forEach(pair => {
+                cards.push({ id: pair.id, icon: pair.icon, matched: false });
+                cards.push({ id: pair.id, icon: pair.icon, matched: false });
+            });
+            
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            
+            renderPuzzleGrid();
+            
+            matchedPairs = 0;
+            moves = 0;
+            flippedCards = [];
+            lockBoard = false;
+            movesSpan.textContent = moves;
+            matchesSpan.textContent = matchedPairs;
+            puzzleMessage.textContent = '';
+        }
+
+        function renderPuzzleGrid() {
+            puzzleGrid.innerHTML = '';
+            
+            cards.forEach((card, index) => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card-flip';
+                if (card.matched) cardDiv.classList.add('matched');
+                cardDiv.dataset.index = index;
+                
+                const cardBack = document.createElement('div');
+                cardBack.className = 'card-back';
+                cardBack.innerHTML = '❤️';
+                
+                const cardFront = document.createElement('div');
+                cardFront.className = 'card-front';
+                cardFront.innerHTML = card.icon;
+                
+                cardDiv.appendChild(cardBack);
+                cardDiv.appendChild(cardFront);
+                
+                cardDiv.addEventListener('click', () => flipCard(index));
+                puzzleGrid.appendChild(cardDiv);
+            });
+        }
+
+        function flipCard(index) {
+            if (lockBoard) return;
+            if (cards[index].matched) return;
+            
+            const cardDiv = document.querySelector(`.card-flip[data-index="${index}"]`);
+            if (cardDiv.classList.contains('flipped')) return;
+            
+            moves++;
+            movesSpan.textContent = moves;
+            
+            cardDiv.classList.add('flipped');
+            flippedCards.push({ index, element: cardDiv });
+            
+            if (flippedCards.length === 2) checkMatch();
+        }
+
+        function checkMatch() {
+            lockBoard = true;
+            
+            const card1 = cards[flippedCards[0].index];
+            const card2 = cards[flippedCards[1].index];
+            
+            if (card1.id === card2.id) {
+                setTimeout(() => {
+                    card1.matched = true;
+                    card2.matched = true;
+                    
+                    flippedCards[0].element.classList.add('matched');
+                    flippedCards[1].element.classList.add('matched');
+                    
+                    matchedPairs++;
+                    matchesSpan.textContent = matchedPairs;
+                    
+                    flippedCards = [];
+                    lockBoard = false;
+                    
+                    if (matchedPairs === 8) {
+                        puzzleMessage.textContent = '🎉 Selamat! Kamu menang! 🎉';
+                        saveData('ucapan', { pesan: 'Menyelesaikan puzzle' });
+                        setTimeout(() => showPage(10), 1500);
+                    }
+                }, 500);
+            } else {
+                setTimeout(() => {
+                    flippedCards[0].element.classList.remove('flipped');
+                    flippedCards[1].element.classList.remove('flipped');
+                    flippedCards = [];
+                    lockBoard = false;
+                }, 800);
+            }
+        }
+
+        btnResetPuzzle.addEventListener('click', (e) => {
+            e.preventDefault();
+            initPuzzle();
+        });
+
+        // ========== PAGE 10 TIMELINE ==========
+        document.getElementById('btnTimeline').addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage(11);
+        });
+
+        // ========== PAGE 11 BALASAN ==========
+        const inputBalasan = document.getElementById('inputBalasan');
+        inputBalasan.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                const balasan = this.value.trim();
+                saveData('balasan', { balasan });
+                showPage(12);
+            }
+        });
+
+        // ========== PAGE 12 QUOTES ==========
+        const quotes = [
+            "Ramadhan adalah bulan yang penuh berkah, bulan dimana pintu surga dibuka dan pintu neraka ditutup.",
+            "Bulan Ramadhan adalah bulan kesabaran, dan kesabaran itu pahalanya adalah surga.",
+            "Barangsiapa berpuasa Ramadhan karena iman dan mengharap pahala, maka diampuni dosa-dosanya yang telah lalu.",
+            "Puasa adalah perisai, maka janganlah berkata kotor dan berperilaku bodoh.",
+            "Di bulan Ramadhan, setan-setan dibelenggu, pintu-pintu surga dibuka, pintu-pintu neraka ditutup.",
+            "Ramadhan adalah bulan dimana Al-Qur'an diturunkan sebagai petunjuk bagi manusia.",
+            "Perbanyaklah sedekah di bulan Ramadhan, karena pahalanya dilipatgandakan.",
+            "Malam Lailatul Qadar lebih baik dari seribu bulan."
+        ];
+
+        let currentQuote = 0;
+        const quoteDisplay = document.getElementById('quoteDisplay');
+        const inputQuote = document.getElementById('inputQuote');
+
+        if (quoteDisplay) {
+            quoteDisplay.textContent = quotes[currentQuote];
+        }
+
+        document.getElementById('quotePrev')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentQuote = (currentQuote - 1 + quotes.length) % quotes.length;
+            quoteDisplay.textContent = quotes[currentQuote];
+        });
+
+        document.getElementById('quoteNext')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentQuote = (currentQuote + 1) % quotes.length;
+            quoteDisplay.textContent = quotes[currentQuote];
+        });
+
+        inputQuote?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                saveData('quotes', { quote: this.value.trim() });
+                this.value = '';
+                alert('Quote ditambahkan!');
+            }
+        });
+
+        // ========== PAGE 13 PUISI ==========
+        const poems = [
+            "Aisya, engkau bagai bulan di malam takbiran,<br>Menerangi hati yang gelap gulita,<br>Di setiap sujudku, namamu terselip doa,<br>Semoga kita bersama selamanya.",
+            "Di bulan suci yang penuh berkah,<br>Kususun doa untukmu sayang,<br>Semoga Allah menjaga kita,<br>Bersama hingga akhir zaman.",
+            "Ramadhan datang membawa cinta,<br>Bersama hadirnya dirimu di sisi,<br>Takbir berkumandang di mana-mana,<br>Hati ini berseri-seri.",
+            "Maaf lahir dan batin kupinta,<br>Untuk semua salah dan khilaf,<br>Semoga Allah meridhoi kita,<br>Bersama selamanya.",
+            "Aisya, engkau adalah hadiah terindah,<br>Di setiap lebaran yang kulewati,<br>Doaku selalu menyertaimu,<br>Semoga kita selalu bersama."
+        ];
+
+        let currentPoem = 0;
+        const poemDisplay = document.getElementById('poemDisplay');
+        const inputPoem = document.getElementById('inputPoem');
+
+        if (poemDisplay) {
+            poemDisplay.innerHTML = poems[currentPoem];
+        }
+
+        document.getElementById('poemPrev')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentPoem = (currentPoem - 1 + poems.length) % poems.length;
+            poemDisplay.innerHTML = poems[currentPoem];
+        });
+
+        document.getElementById('poemNext')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            currentPoem = (currentPoem + 1) % poems.length;
+            poemDisplay.innerHTML = poems[currentPoem];
+        });
+
+        inputPoem?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && this.value.trim() !== '') {
+                saveData('poem', { puisi: this.value.trim() });
+                this.value = '';
+                alert('Puisi ditambahkan!');
+            }
+        });
+
+        // ========== PAGE 14 QUIZ (FIXED - TIDAK KEMBALI) ==========
+        const quizData = [
+            {
+                question: "Kapan pertama kali kita bertemu?",
+                options: ["1445 H", "1446 H", "1447 H", "1448 H"],
+                correct: 1 // index ke-1 = "1446 H"
+            },
+            {
+                question: "Di mana pertama kali kita bertemu?",
+                options: ["Masjid", "Sekolah", "Kampus", "Kafe"],
+                correct: 0 // index ke-0 = "Masjid"
+            },
+            {
+                question: "Apa makanan pertama yang kita makan bersama?",
+                options: ["Ketupat", "Rendang", "Opor", "Sambal"],
+                correct: 0 // index ke-0 = "Ketupat"
+            },
+            {
+                question: "Siapa yang pertama kali mengucapkan salam?",
+                options: ["Aisya", "Akbar", "Bersamaan", "Tidak ingat"],
+                correct: 1 // index ke-1 = "Akbar"
+            },
+            {
+                question: "Kapan kita pertama kali foto bersama?",
+                options: ["Lebaran 1445", "Lebaran 1446", "Ramadhan 1446", "Syawal 1447"],
+                correct: 1 // index ke-1 = "Lebaran 1446"
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let quizAnswered = false;
+
+        function loadQuizQuestion() {
+            const quizQuestion = document.getElementById('quizQuestion');
+            const quizOptions = document.getElementById('quizOptions');
+            const quizResult = document.getElementById('quizResult');
+            const quizScoreEl = document.getElementById('quizScore');
+            const quizNextBtn = document.getElementById('quizNextBtn');
+            
+            if (!quizQuestion || !quizOptions) return;
+            
+            // Reset state
+            quizAnswered = false;
+            quizResult.textContent = '';
+            
+            // Load question
+            const q = quizData[currentQuizIndex];
+            quizQuestion.textContent = q.question;
+            
+            // Update score display
+            if (quizScoreEl) {
+                quizScoreEl.textContent = `Skor: ${quizScore}/${quizData.length}`;
+            }
+            
+            // Update options
+            quizOptions.innerHTML = '';
+            q.options.forEach((option, index) => {
+                const optionCard = document.createElement('div');
+                optionCard.className = 'option-card';
+                optionCard.dataset.answer = index;
+                optionCard.textContent = option;
+                
+                optionCard.addEventListener('click', function() {
+                    if (quizAnswered) return; // Prevent multiple answers
+                    
+                    const selected = parseInt(this.dataset.answer);
+                    const isCorrect = (selected === q.correct);
+                    
+                    // Mark as answered
+                    quizAnswered = true;
+                    
+                    // Disable all options
+                    document.querySelectorAll('#quizOptions .option-card').forEach(card => {
+                        card.style.pointerEvents = 'none';
+                    });
+                    
+                    // Highlight correct/incorrect
+                    if (isCorrect) {
+                        this.classList.add('selected');
+                        quizScore++;
+                        quizResult.textContent = '✅ Benar!';
+                        quizResult.style.color = '#4caf50';
+                        
+                        // Save to database
+                        saveData('ucapan', { 
+                            pesan: `Quiz: Menjawab benar - ${q.question} = ${option}` 
+                        });
+                    } else {
+                        this.style.background = 'rgba(255, 68, 68, 0.3)';
+                        this.style.borderColor = '#ff4444';
+                        quizResult.textContent = `❌ Maaf, jawaban yang benar adalah ${q.options[q.correct]}`;
+                        quizResult.style.color = '#ff4444';
+                        
+                        // Highlight correct answer
+                        document.querySelectorAll('#quizOptions .option-card')[q.correct].style.background = 'rgba(76, 175, 80, 0.3)';
+                        document.querySelectorAll('#quizOptions .option-card')[q.correct].style.borderColor = '#4caf50';
+                        
+                        // Save to database
+                        saveData('ucapan', { 
+                            pesan: `Quiz: Menjawab salah - ${q.question} (memilih ${option})` 
+                        });
+                    }
+                    
+                    // Update score display
+                    if (quizScoreEl) {
+                        quizScoreEl.textContent = `Skor: ${quizScore}/${quizData.length}`;
+                    }
+                    
+                    // Show next button or finish
+                    const quizNextBtn = document.getElementById('quizNextBtn');
+                    if (currentQuizIndex < quizData.length - 1) {
+                        // Not last question
+                        quizNextBtn.textContent = `Pertanyaan Selanjutnya (${currentQuizIndex + 2}/${quizData.length})`;
+                        quizNextBtn.style.display = 'block';
+                    } else {
+                        // Last question
+                        quizNextBtn.textContent = `Selesai! Skor Akhir: ${quizScore}/${quizData.length}  ➡️`;
+                        quizNextBtn.style.display = 'block';
+                    }
+                });
+                
+                quizOptions.appendChild(optionCard);
+            });
+        }
+
+        // Quiz Next button handler
+        document.getElementById('quizNextBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (currentQuizIndex < quizData.length - 1) {
+                // Move to next question
+                currentQuizIndex++;
+                loadQuizQuestion();
+                this.style.display = 'none';
+            } else {
+                // Quiz finished, move to next page
+                const finalMessage = `✨ Quiz selesai! Skor akhir: ${quizScore}/${quizData.length}`;
+                document.getElementById('quizResult').textContent = finalMessage;
+                
+                saveData('ucapan', { pesan: `Menyelesaikan quiz dengan skor ${quizScore}/${quizData.length}` });
+                
+                setTimeout(() => {
+                    showPage(15);
+                }, 2000);
+            }
+        });
+
+        // Initialize quiz when page 14 is shown
+        const observerQuiz = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.classList.contains('active') && mutation.target.id === 'page14') {
+                    // Reset quiz when entering page 14
+                    currentQuizIndex = 0;
+                    quizScore = 0;
+                    loadQuizQuestion();
+                    
+                    // Hide next button initially
+                    const quizNextBtn = document.getElementById('quizNextBtn');
+                    if (quizNextBtn) quizNextBtn.style.display = 'none';
+                }
+            });
+        });
+
+        observerQuiz.observe(document.getElementById('page14'), { attributes: true, attributeFilter: ['class'] });
+
+        // ========== PAGE 15 KEKUATAN HUBUNGAN ==========
+        let strength = 0;
+        const strengthBar = document.getElementById('strengthBar');
+        const compatibilityScore = document.getElementById('compatibilityScore');
+
+        document.querySelectorAll('#page15 .option-card').forEach(card => {
+            card.addEventListener('click', function() {
+                strength += 25;
+                strengthBar.style.width = strength + '%';
+                compatibilityScore.textContent = strength + '%';
+                
+                if (strength >= 100) {
+                    saveData('ucapan', { pesan: 'Mencapai 100% kekuatan hubungan' });
+                    setTimeout(() => showPage(16), 1000);
+                }
+            });
+        });
+
+        // ========== PAGE 16 KOTAK KADO ==========
+        const giftBox = document.getElementById('giftBox');
+        const giftContent = document.getElementById('giftContent');
+        let giftOpened = false;
+
+        giftBox?.addEventListener('click', () => {
+            if (!giftOpened) {
+                giftBox.classList.add('open');
+                giftContent.innerHTML = '🎉 Selamat Lebaran! Semoga semua wishlist terkabul! 🎉';
+                saveData('ucapan', { pesan: 'Membuka kotak kado' });
+                giftOpened = true;
+                setTimeout(() => showPage(17), 2000);
+            }
+        });
+
+        // ========== PAGE 17 COUNTDOWN ==========
+        let countdownInterval;
+
+        function updateCountdown() {
+            const lebaranDate = document.getElementById('lebaranDate').value;
+            const target = new Date(lebaranDate).getTime();
+            const now = new Date().getTime();
+            const difference = target - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('countdown').textContent = 
+                    `${days.toString().padStart(2, '0')}:${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                document.getElementById('countdown').textContent = '00:00:00:00';
+            }
+        }
+
+        document.getElementById('setCountdown')?.addEventListener('click', () => {
+            if (countdownInterval) clearInterval(countdownInterval);
+            updateCountdown();
+            countdownInterval = setInterval(updateCountdown, 1000);
+        });
+
+        // ========== PAGE 18 PETA IMPIAN ==========
+        document.querySelectorAll('#page18 .dream-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const dream = this.dataset.dream;
+                const message = document.getElementById('dreamMessage');
+                
+                const dreamTexts = {
+                    umrah: '🕋 Semoga kita bisa umrah bersama!',
+                    bali: '🏝️ Liburan ke Bali bareng yuk!',
+                    jepang: '🗼 Sakura di Jepang bareng Aisya',
+                    eropa: '🏰 Eropa dengan orang tercinta',
+                    rumah: '🏠 Rumah idaman kita nanti',
+                    haji: '🕋 Panggilan haji bersama-sama'
+                };
+                
+                message.textContent = dreamTexts[dream];
+                saveData('wishes', { wish: dreamTexts[dream] });
+            });
+        });
+
+        // ========== PAGE 19 PLAYLIST ==========
+        document.querySelectorAll('#page19 .song-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const songTitle = this.querySelector('.song-title').textContent;
+                const songArtist = this.querySelector('.song-artist').textContent;
+                const nowPlaying = document.getElementById('nowPlaying');
+                nowPlaying.innerHTML = `<i class="fas fa-music"></i> Memutar: ${songTitle} - ${songArtist}`;
+                saveData('ucapan', { pesan: `Memutar lagu: ${songTitle}` });
+            });
+        });
+
+        // ========== PAGE 20 RESTART ==========
+        document.getElementById('btnRestart')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Reset all states
+            wishCompleted = 0;
+            surpriseCount = 0;
+            strength = 0;
+            giftOpened = false;
+            currentQuote = 0;
+            currentPoem = 0;
+            currentQuizIndex = 0;
+            quizScore = 0;
+            
+            document.querySelectorAll('.wish-check').forEach(c => {
+                c.classList.remove('checked');
+                c.innerHTML = '⬜';
+            });
+            
+            document.querySelectorAll('.option-card').forEach(c => {
+                c.classList.remove('selected');
+                c.style.background = '';
+                c.style.borderColor = '';
+            });
+            
+            loveMeterFill.style.width = '0%';
+            lovePercentage.textContent = '0%';
+            strengthBar.style.width = '0%';
+            compatibilityScore.textContent = '0%';
+            
+            showPage(1);
+        });
+
+        // ========== INITIALIZE ==========
+        showPage(1);
     </script>
-    
-    <!-- JavaScript -->
-    <script type="module" src="script.js"></script>
 </body>
 </html>

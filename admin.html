@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Panel</title>
+</head>
+
+<body>
+
+<h1>Data Ucapan Website</h1>
+
+<div id="dataUcapan"></div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, onSnapshot } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "API_KEY_KAMU",
+  authDomain: "PROJECT.firebaseapp.com",
+  projectId: "PROJECT_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+onSnapshot(collection(db,"ucapan"),(snapshot)=>{
+
+const div=document.getElementById("dataUcapan");
+
+div.innerHTML="";
+
+snapshot.forEach(doc=>{
+
+const d=doc.data();
+
+div.innerHTML+=`
+<div style="border:1px solid #ccc;padding:10px;margin:10px">
+<b>${d.nama}</b>
+<p>${d.pesan}</p>
+</div>
+`;
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
