@@ -249,6 +249,7 @@ body {
 /* Doa List */
 .doa-list {
     margin: 20px 0;
+    text-color: white;
 }
 
 .doa-item {
